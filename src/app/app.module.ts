@@ -13,17 +13,31 @@ import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldMo
 import 'hammerjs';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
+import { DishDetailComponent } from './dish-detail/dish-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    DishDetailComponent
   ],
   imports: [
-    MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule,
-    MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
-    MatSlideToggleModule, MatToolbarModule, MatListModule, MatGridListModule,
-    MatCardModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule,
+    MatButtonModule,
+    MatCheckboxModule, 
+    MatDatepickerModule, 
+    MatFormFieldModule,
+    MatInputModule, 
+    MatRadioModule, 
+    MatSelectModule, 
+    MatSliderModule,
+    MatSlideToggleModule, 
+    MatToolbarModule, 
+    MatListModule, 
+    MatGridListModule,
+    MatCardModule, 
+    MatIconModule, 
+    MatProgressSpinnerModule, 
+    MatDialogModule,
     FlexLayoutModule,
     BrowserModule,
     BrowserAnimationsModule,
