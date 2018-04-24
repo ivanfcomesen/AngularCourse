@@ -18,3 +18,12 @@ export class DishDetailComponent implements OnInit {
   }
 
 }
+
+//ng generate component about
+//ng generate component home
+//ng generate module app-routing 
+// ng generate module app-routing --module app.module.ts
+//
+
+
+
