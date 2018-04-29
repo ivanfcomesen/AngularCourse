@@ -7,6 +7,11 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { DishService } from './services/dish.service';
+
+import {PromotionService} from './services/promotion.service';
+
+
+
 import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule,
   MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
   MatSlideToggleModule, MatToolbarModule, MatListModule, MatGridListModule,
@@ -58,7 +63,8 @@ import { ContactComponent } from './contact/contact.component';
     MaterialModule,
     AppRoutingModule
   ],
-  providers: [DishService],
+  providers: [DishService,
+      PromotionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
