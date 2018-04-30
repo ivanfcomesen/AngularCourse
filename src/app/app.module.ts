@@ -7,6 +7,7 @@ import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { DishService } from './services/dish.service';
+import {LeaderService} from './services/leader.service'
 
 import {PromotionService} from './services/promotion.service';
 
@@ -64,7 +65,8 @@ import { ContactComponent } from './contact/contact.component';
     AppRoutingModule
   ],
   providers: [DishService,
-      PromotionService],
+      PromotionService,
+      LeaderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
