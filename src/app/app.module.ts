@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing/app-routing.module';
 import { DishService } from './services/dish.service';
 import {LeaderService} from './services/leader.service'
 import {PromotionService} from './services/promotion.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -63,6 +64,7 @@ import { LoginComponent } from './login/login.component';
     FormsModule,
     HttpModule,
     MaterialModule,
+     ReactiveFormsModule,
     AppRoutingModule
   ],
   providers: [DishService,
