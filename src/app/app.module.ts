@@ -11,12 +11,10 @@ import {LeaderService} from './services/leader.service'
 import {PromotionService} from './services/promotion.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-
 import { MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule,
   MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
   MatSlideToggleModule, MatToolbarModule, MatListModule, MatGridListModule,
-  MatCardModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule } from '@angular/material';
+  MatCardModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule} from '@angular/material';
 
 import 'hammerjs';
 import { AppComponent } from './app.component';
@@ -52,7 +50,7 @@ import { LoginComponent } from './login/login.component';
     MatSliderModule,
     MatSlideToggleModule, 
     MatToolbarModule, 
-    MatListModule, 
+    MatListModule,
     MatGridListModule,
     MatCardModule, 
     MatIconModule, 
