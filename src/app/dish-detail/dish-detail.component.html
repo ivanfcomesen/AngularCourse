@@ -38,9 +38,23 @@
 
             </mat-list-item>
             <!-- <h3 matLine> {{dish.comments.rating} </h3>-->
-        </mat-list>        
-    </div>
-    <div [hidden]="dish">
-        <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+        </mat-list>
+
+        <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+              <mat-input-container class="full-width"
+                             dividerColor="{{(formErrors.author) ? 'warn' : 'primary'}}">
+                <input matInput formControlName="Name" placeholder="Name" type="text" required>
+                <mat-hint>
+                    <span [hidden]="!(formErrors.firstname)">
+                        {{formErrors.firstname}}</span>
+                </mat-hint>
+            </mat-input-container>
+            <p>
+            <mat-slider min="1" max="5" step="1" value="5"></mat-slider>
+            </p>
+            <mat-input-container class="full-width">
+                <textarea matInput formControlName="comment" placeholder="Your Comment" rows=5></textarea>
+            </mat-input-container>
+        </form>
     </div>
 </div>
