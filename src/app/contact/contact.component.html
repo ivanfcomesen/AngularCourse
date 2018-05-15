@@ -39,8 +39,8 @@
     <div fxFlex fxFlexOffset="20px" class="form-size">
         <h3>Send us your Feedback</h3>
         <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
-
-                     <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
+                    
+        <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()">
           <p>
             <mat-input-container class="half-width"
              dividerColor="{{(formErrors.firstname) ? 'warn' : 'primary'}}">
@@ -95,7 +95,6 @@
             </mat-input-container>
           </p>
           <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="feedbackForm.invalid">Submit</button>
-        </form>
-        
+        </form>        
 </div>
 </div>
