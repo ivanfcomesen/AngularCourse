@@ -38,12 +38,10 @@ export class DishDetailComponent implements OnInit {
         }
     };
 
-
     constructor(private dishservice: DishService, private route: ActivatedRoute,
         private location: Location, private fb: FormBuilder) {
         this.createForm();            
         }
-
 
     ngOnInit() {
         this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
@@ -74,13 +72,6 @@ export class DishDetailComponent implements OnInit {
     }
 
     onSubmit() {
-      this.commentForm = this.fb.group({
-            author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-            rating: '',
-            comment: ['', [Validators.required] ]
-        });
-        
-        /*onSubmit() {
     this.comment = this.commentForm.value;
     this.comment.date = new Date().toISOString();
     console.log(this.comment);
@@ -89,11 +80,9 @@ export class DishDetailComponent implements OnInit {
       author: '',
       rating :5,
       comment: ''
-    });
-  }*/
-        
-    }
-
+    }); }
+                
+   
     onValueChanged(data?: any) {
         if (!this.commentForm) {return;}
         const form = this.commentForm;
