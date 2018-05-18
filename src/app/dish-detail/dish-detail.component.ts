@@ -1,8 +1,10 @@
 import {DishService} from '../services/dish.service';
 import {Params, ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Inject} from '@angular/core';
 import {Dish} from '../shared/dish';
+
+
 
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Comment} from '../shared/comment';
@@ -24,9 +26,9 @@ export class DishDetailComponent implements OnInit {
     commentForm: FormGroup;
     comment: Comment;
     formErrors = {
-    'author': '',
-    'comment': ''
-  };
+        'author': '',
+        'comment': ''
+    };
     validationMessages = {
         'author': {
             'required': 'Author Name is required.',
@@ -38,33 +40,26 @@ export class DishDetailComponent implements OnInit {
         }
     };
 
-    constructor(private dishservice: DishService, private route: ActivatedRoute,
+    constructor(private dishService: DishService,
+    @Inject('BaseURL') private BaseURL,
+        private route: ActivatedRoute,
         private location: Location, private fb: FormBuilder) {
-        this.createForm();            
-        }
+        this.createForm();
+    }
 
     ngOnInit() {
-        this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
+        this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
         this.route.params
-            .switchMap((params: Params) => this.dishservice.getDish(+params['id']))
+            .switchMap((params: Params) => this.dishService.getDish(+params['id']))
             .subscribe(dish => {this.dish = dish; this.setPrevNext(dish.id);});
     }
-    
-    
-    /*  ngOnInit() {
-    this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
-    this.route.params.switchMap((params: Params) => this.dishservice.getDish(+params['id']))
-    .subscribe(dish => {this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id);},
-     errmess => this.errMess = <any>errmess );
-    
-  }*/
 
     createForm() {
 
         this.commentForm = this.fb.group({
             author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-            rating: '',
-            comment: ['', [Validators.required] ]
+            rating: '5',
+            comment: ['', [Validators.required]]
         });
 
         this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data))
@@ -72,17 +67,18 @@ export class DishDetailComponent implements OnInit {
     }
 
     onSubmit() {
-    this.comment = this.commentForm.value;
-    this.comment.date = new Date().toISOString();
-    console.log(this.comment);
-    this.dish.comments.push(this.comment);
-    this.commentForm.reset({
-      author: '',
-      rating :5,
-      comment: ''
-    }); }
-                
-   
+        this.comment = this.commentForm.value;
+        this.comment.date = new Date().toISOString();
+        console.log(this.comment);
+        this.dish.comments.push(this.comment);
+        this.commentForm.reset({
+            author: '',
+            rating: 5,
+            comment: ''
+        });
+    }
+
+
     onValueChanged(data?: any) {
         if (!this.commentForm) {return;}
         const form = this.commentForm;
