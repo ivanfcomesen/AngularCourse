@@ -14,6 +14,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {baseURL} from './shared/baseURL';
 import {ProcessHTTPMsgService} from './services/process-httpmsg.service';
 
+import { RestangularModule, Restangular } from 'ngx-restangular';
+import {RestangularConfigFactory} from './shared/restConfig';
+
 import {
     MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule,
     MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
@@ -68,7 +71,8 @@ import {LoginComponent} from './login/login.component';
         HttpModule,
         MaterialModule,
         ReactiveFormsModule,
-        AppRoutingModule
+        AppRoutingModule,
+        RestangularModule.forRoot(RestangularConfigFactory)
     ],
     providers: [DishService,
         PromotionService,

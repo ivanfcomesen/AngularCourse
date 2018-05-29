@@ -5,7 +5,6 @@ import {Component, OnInit, Inject} from '@angular/core';
 import {Dish} from '../shared/dish';
 
 
-
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Comment} from '../shared/comment';
 
@@ -22,9 +21,11 @@ export class DishDetailComponent implements OnInit {
     prev: number;
     next: number;
     dish: Dish;
+    dishcopy = null;
+    errMess: string;
+    comment: Comment;
 
     commentForm: FormGroup;
-    comment: Comment;
     formErrors = {
         'author': '',
         'comment': ''
@@ -41,17 +42,17 @@ export class DishDetailComponent implements OnInit {
     };
 
     constructor(private dishService: DishService,
-    @Inject('BaseURL') private BaseURL,
         private route: ActivatedRoute,
-        private location: Location, private fb: FormBuilder) {
-        this.createForm();
-    }
+        private location: Location, private fb: FormBuilder,
+        @Inject('BaseURL') private BaseURL) {}
 
     ngOnInit() {
-        this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
+        this.createForm();
+        this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds)
         this.route.params
-            .switchMap((params: Params) => this.dishService.getDish(+params['id']))
-            .subscribe(dish => {this.dish = dish; this.setPrevNext(dish.id);});
+            .switchMap((params: Params) => {return this.dishService.getDish(+params['id']);})
+            .subscribe(dish => {this.dish = dish; this.setPrevNext(dish.id);},
+                errmess => {this.errMess = <any> errmess;});
     }
 
     createForm() {
@@ -70,14 +71,14 @@ export class DishDetailComponent implements OnInit {
         this.comment = this.commentForm.value;
         this.comment.date = new Date().toISOString();
         console.log(this.comment);
-        this.dish.comments.push(this.comment);
+        this.dishcopy.comments.push(this.comment)
+        this.dishcopy.save();
         this.commentForm.reset({
             author: '',
             rating: 5,
             comment: ''
         });
     }
-
 
     onValueChanged(data?: any) {
         if (!this.commentForm) {return;}
@@ -104,7 +105,6 @@ export class DishDetailComponent implements OnInit {
     goBack(): void {
         this.location.back();
     }
-
 }
 // ng generate module app-routing --module app.module.ts
 
