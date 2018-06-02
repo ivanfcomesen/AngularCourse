@@ -110,3 +110,6 @@ export class DishDetailComponent implements OnInit {
 
 
 
+//ng generate directive highlight --module app.module.ts
+
+//ng generate directive highlight --module app.module.ts
