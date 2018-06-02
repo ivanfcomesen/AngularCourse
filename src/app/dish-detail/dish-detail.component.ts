@@ -3,6 +3,7 @@ import {Params, ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {Component, OnInit, Inject} from '@angular/core';
 import {Dish} from '../shared/dish';
+import {trigger, state, style, animate, transition} from '@angular/animations';
 
 
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -13,7 +14,20 @@ import 'rxjs/add/operator/switchMap';
 @Component({
     selector: 'app-dish-detail',
     templateUrl: './dish-detail.component.html',
-    styleUrls: ['./dish-detail.component.scss']
+    styleUrls: ['./dish-detail.component.scss'],
+    animations: [
+        trigger('visibility', [
+            state('shown', style({
+                transform: 'scale(1.0)',
+                opacity: 1
+            })),
+            state('hidden', style({
+                transform: 'scale(0.5)',
+                opacity: 0
+            })),
+            transition('* => *', animate('0.5s ease-in-out'))
+        ])
+    ]
 })
 export class DishDetailComponent implements OnInit {
 
@@ -24,6 +38,7 @@ export class DishDetailComponent implements OnInit {
     dishcopy = null;
     errMess: string;
     comment: Comment;
+    visibility = 'shown';
 
     commentForm: FormGroup;
     formErrors = {
@@ -50,9 +65,9 @@ export class DishDetailComponent implements OnInit {
         this.createForm();
         this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds)
         this.route.params
-            .switchMap((params: Params) => {return this.dishService.getDish(+params['id']);})
-            .subscribe(dish => {this.dish = dish; this.setPrevNext(dish.id);},
-                errmess => {this.errMess = <any> errmess;});
+            .switchMap((params: Params) => {this.visibility = 'hidden'; return this.dishService.getDish(+params['id']);})
+            .subscribe(dish => {this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown';},
+                errmess => {this.dish = null; this.errMess = <any> errmess;});
     }
 
     createForm() {
