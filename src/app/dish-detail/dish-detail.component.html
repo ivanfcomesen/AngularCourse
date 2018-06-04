@@ -67,7 +67,7 @@
                     <span [hidden] = "!(formErrors.author)">{{formErrors.comment}}</span>
                 </md-hint>
             </mat-input-container>
-            <button type="submit" mat-button class="background-primary text-floral-white" [disabled]="commentForm.invalid">Submit</button>
+            <button type="submit" mat-button [disabled]="commentForm.invalid">Submit</button>
         </form>
     </div>
 

@@ -3,7 +3,7 @@ import {Params, ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {Component, OnInit, Inject} from '@angular/core';
 import {Dish} from '../shared/dish';
-import {visibility, flyInOut, expand } from '../animations/app.animation';
+import {visibility, flyInOut, expand} from '../animations/app.animation';
 
 
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -51,7 +51,6 @@ export class DishDetailComponent implements OnInit {
             'required': 'Your Comment is required.'
         }
     };
-
     constructor(private dishService: DishService,
         private route: ActivatedRoute,
         private location: Location, private fb: FormBuilder,
@@ -65,7 +64,6 @@ export class DishDetailComponent implements OnInit {
             .subscribe(dish => {this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown';},
                 errmess => {this.dish = null; this.errMess = <any> errmess;});
     }
-
     createForm() {
 
         this.commentForm = this.fb.group({
@@ -83,14 +81,14 @@ export class DishDetailComponent implements OnInit {
         this.comment.date = new Date().toISOString();
         console.log(this.comment);
         this.dishcopy.comments.push(this.comment)
-        this.dishcopy.save();
+        this.dishcopy.save()
+            .subscribe(dish => this.dish = dish);
         this.commentForm.reset({
             author: '',
             rating: 5,
             comment: ''
         });
     }
-
     onValueChanged(data?: any) {
         if (!this.commentForm) {return;}
         const form = this.commentForm;
@@ -106,7 +104,6 @@ export class DishDetailComponent implements OnInit {
             }
         }
     }
-
     setPrevNext(dishId: number) {
         let index = this.dishIds.indexOf(dishId);
         this.prev = this.dishIds[(this.dishIds.length + index - 1) % this.dishIds.length];
@@ -118,8 +115,6 @@ export class DishDetailComponent implements OnInit {
     }
 }
 // ng generate module app-routing --module app.module.ts
-
-
 
 //ng generate directive highlight --module app.module.ts
 
