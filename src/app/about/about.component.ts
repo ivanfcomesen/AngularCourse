@@ -21,16 +21,17 @@ import {Leader} from '../shared/leader';
 export class AboutComponent implements OnInit {
 
     leaders: Leader[]
+    leaderErrMess: string;
 
     constructor(private leaderservice: LeaderService,
-        @Inject('BaseURL') private BaseURL,
         private route: ActivatedRoute) {}
 
     ngOnInit() {
         let id = +this.route.snapshot.params['id'];
         this.leaderservice.getLeaders()
-            .subscribe(leaders => this.leaders = leaders);
+            .subscribe(leaders => this.leaders = leaders,leaderErrMess => this.leaderErrMess = <any> leaderErrMess);
     }
+
 
 }
 

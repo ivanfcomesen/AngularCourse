@@ -15,6 +15,7 @@ import 'rxjs/add/operator/switchMap';
     selector: 'app-dish-detail',
     templateUrl: './dish-detail.component.html',
     styleUrls: ['./dish-detail.component.scss'],
+    providers: [DishService],
     host: {
         '[@flyInOut]': 'true',
         'style': 'display: block;'

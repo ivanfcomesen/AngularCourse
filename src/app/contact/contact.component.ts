@@ -1,25 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Feedback, ContactType} from '../shared/feedback';
-import {flyInOut} from '../animations/app.animation';
-
+import {FeedbackService} from '../services/feedback.service';
+import {visibility, flyInOut, expand} from '../animations/app.animation';
 
 @Component({
     selector: 'app-contact',
     templateUrl: './contact.component.html',
     styleUrls: ['./contact.component.scss'],
+    providers: [FeedbackService],
     host: {
         '[@flyInOut]': 'true',
         'style': 'display: block;'
     },
     animations: [
-        flyInOut()
+        visibility(),
+        flyInOut(),
+        expand()
     ]
 })
 export class ContactComponent implements OnInit {
 
     feedbackForm: FormGroup;
     feedback: Feedback;
+    // fbSubmitted: any;
+
     contactType = ContactType;
     formErrors = {
         'firstname': '',
@@ -49,11 +54,16 @@ export class ContactComponent implements OnInit {
     };
 
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder,
+        private fbService: FeedbackService,
+        @Inject('BaseURL') private BaseURL) {
         this.createForm();
     }
 
+
     ngOnInit() {
+        /*       
+        */
     }
 
     createForm() {
@@ -66,23 +76,16 @@ export class ContactComponent implements OnInit {
             contacttype: 'None',
             message: ''
         });
-
         this.feedbackForm.valueChanges
             .subscribe(data => this.onValueChanged(data));
-
         this.onValueChanged(); // (re)set validation messages now
     }
 
     onSubmit() {
-        this.feedbackForm = this.fb.group({
-            firstname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-            lastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-            telnum: ['', [Validators.required, Validators.pattern]],
-            email: ['', [Validators.required, Validators.email]],
-            agree: false,
-            contacttype: 'None',
-            message: ''
-        });
+        this.feedback = this.feedbackForm.value;
+        this.fbService.submitFeedback(this.feedback)
+            .subscribe(feedback => { this.feedback = feedback;
+             console.log(this.feedback); });
     }
 
     onValueChanged(data?: any) {
