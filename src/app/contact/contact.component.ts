@@ -21,9 +21,12 @@ import {visibility, flyInOut, expand} from '../animations/app.animation';
 })
 export class ContactComponent implements OnInit {
 
+    submitform: boolean;
+    //  submitform: boolean;
     feedbackForm: FormGroup;
     feedback: Feedback;
-    // fbSubmitted: any;
+    feedbackCopy = null;
+    errMess: string;
 
     contactType = ContactType;
     formErrors = {
@@ -60,7 +63,6 @@ export class ContactComponent implements OnInit {
         this.createForm();
     }
 
-
     ngOnInit() {
         /*       
         */
@@ -73,7 +75,7 @@ export class ContactComponent implements OnInit {
             telnum: ['', [Validators.required, Validators.pattern]],
             email: ['', [Validators.required, Validators.email]],
             agree: false,
-            contacttype: 'None',
+            contacttype: 'No',
             message: ''
         });
         this.feedbackForm.valueChanges
@@ -84,8 +86,27 @@ export class ContactComponent implements OnInit {
     onSubmit() {
         this.feedback = this.feedbackForm.value;
         this.fbService.submitFeedback(this.feedback)
-            .subscribe(feedback => { this.feedback = feedback;
-             console.log(this.feedback); });
+            .subscribe(feedback => {
+                this.feedbackCopy = feedback;
+                this.submitform = false;
+                setTimeout(() => {
+
+                    this.feedbackCopy = null;
+
+                }, 5000)
+            },
+                errmess => {
+                    this.feedbackCopy = null; this.errMess = <any> errmess;
+                });
+        this.feedbackForm.reset({
+            firstname: '',
+            lastname: '',
+            telnum: '',
+            email: '',
+            agree: '',
+            contactype:'No',
+            message: '',                        
+        });
     }
 
     onValueChanged(data?: any) {
@@ -103,4 +124,7 @@ export class ContactComponent implements OnInit {
             }
         }
     }
+
+
+
 }
