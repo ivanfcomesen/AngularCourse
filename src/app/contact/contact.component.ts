@@ -27,6 +27,10 @@ export class ContactComponent implements OnInit {
     feedback: Feedback;
     feedbackCopy = null;
     errMess: string;
+    visibility = 'shown';
+    showSpinner = false;
+    showSubmission = false;
+
 
     contactType = ContactType;
     formErrors = {
@@ -85,46 +89,62 @@ export class ContactComponent implements OnInit {
 
     onSubmit() {
         this.feedback = this.feedbackForm.value;
-        this.fbService.submitFeedback(this.feedback)
+        console.log(this.feedback);
+        this.feedbackCopy = this.feedback;
+
+        /*
+        this.feedbackCopy.firstname = this.feedbackForm.value.firstname;
+        this.feedbackCopy.lastname = this.feedbackForm.value.lastname;
+        this.feedbackCopy.telnumber = this.feedbackForm.value.telnum;
+        this.feedbackCopy.email = this.feedbackForm.value.email;
+        this.feedbackCopy.agree = this.feedbackForm.value.agree;
+        this.feedbackCopy.contacttype = this.feedbackForm.value.contacttype;
+        this.feedbackCopy.message = this.feedbackForm.value.message;
+        console.log(this.feedbackCopy);                       
+         */
+
+        // save back to the server, and create observable
+        // that will give it right back as an restangular obj
+        this.visibility = 'hidden';
+        this.showSpinner = true;
+        this.fbService.submitFeedback(this.feedbackCopy)
             .subscribe(feedback => {
-                this.feedbackCopy = feedback;
-                this.submitform = false;
+                this.feedback = feedback;
+                this.showSpinner = false;
+                this.showSubmission = true;
+                console.log(this.feedback);
                 setTimeout(() => {
+                    this.visibility = 'shown';
+                    this.showSubmission = false;
+                }, 5000);
 
-                    this.feedbackCopy = null;
+            });
 
-                }, 5000)
-            },
-                errmess => {
-                    this.feedbackCopy = null; this.errMess = <any> errmess;
-                });
         this.feedbackForm.reset({
             firstname: '',
             lastname: '',
             telnum: '',
             email: '',
-            agree: '',
-            contactype:'No',
-            message: '',                        
+            agree: false,
+            contacttype: 'No',
+            message: ''
         });
     }
 
-    onValueChanged(data?: any) {
-        if (!this.feedbackForm) {return;}
-        const form = this.feedbackForm;
-        for (const field in this.formErrors) {
-            // clear previous error message (if any)
-            this.formErrors[field] = '';
-            const control = form.get(field);
-            if (control && control.dirty && !control.valid) {
-                const messages = this.validationMessages[field];
-                for (const key in control.errors) {
-                    this.formErrors[field] += messages[key] + ' ';
-                }
+onValueChanged(data ?: any) {
+    if (!this.feedbackForm) {return;}
+    const form = this.feedbackForm;
+    for (const field in this.formErrors) {
+        // clear previous error message (if any)
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+            const messages = this.validationMessages[field];
+            for (const key in control.errors) {
+                this.formErrors[field] += messages[key] + ' ';
             }
         }
     }
-
-
+}
 
 }

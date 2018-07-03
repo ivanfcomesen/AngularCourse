@@ -40,8 +40,8 @@
         <h3>Envianos tus comentarios</h3>
         <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
 
-        <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" [hidden]="submitform"
-              *ngIf="!feedbackCopy"  [@expand]>
+        <form novalidate [formGroup]="feedbackForm" (ngSubmit)="onSubmit()" *ngIf="!showSpinner && !showSubmission"
+              [@visibility]="visibility" [@expand]>
               <p>
             <mat-input-container class="half-width"
                                  dividerColor="{{(formErrors.firstname) ? 'warn' : 'primary'}}">
@@ -97,15 +97,17 @@
         </p>
         <button type="submit" mat-button [disabled]="feedbackForm.invalid">Submit</button>
     </form> 
-
-
-
-
 </div>
 
-<div [hidden]="!submitform"  >
-    <div fxFlex *ngIf="feedbackCopy" [@expand]>
-         <h3>Sus comentarios</h3>
+<div *ngIf="showSpinner" [@flyInOut] >
+    <h2>Submitting Form</h2>
+    <mat-spinner></mat-spinner> 
+    <h2>Loading . . . Please Wait</h2>
+</div>
+
+
+    <div *ngIf="showSubmission" [@expand]>
+         <h2>Sus comentarios</h2>
         <mat-list>
             <p mat-line>Nombre:&nbsp;{{ feedback.firstname }}</p>     
             <p mat-line>Apellido:&nbsp;{{ feedback.lastname }}</p>        
@@ -115,12 +117,9 @@
             <p mat-line>Comentario&nbsp;{{ feedback.message }}</p>         
         </mat-list>
     </div>
+
+
     
-    <div *ngIf="feedbackCopy" [hidden]="submitform">
-    <h2>Submitting Form</h2>
-    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
-</div>
-</div>        
 
 
 </div>

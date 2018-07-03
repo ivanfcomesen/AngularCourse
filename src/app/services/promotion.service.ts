@@ -17,7 +17,7 @@ export class PromotionService {
         return this.restangular.all('promotions').getList();
     }
     getPromotion(id: number): Observable<Promotion> {
-        return this.restangular.all('promotions', id).get();
+        return this.restangular.one('promotions', id).get();
     }
     getFeaturedPromotion(): Observable<Promotion> {
         return this.restangular.all('promotions').getList({featured: true})

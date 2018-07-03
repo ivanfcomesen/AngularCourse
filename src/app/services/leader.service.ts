@@ -17,7 +17,7 @@ export class LeaderService {
         return this.restangular.all('leaders').getList();
     }
     getLeader(id: number): Observable<Leader> {
-        return this.restangular.one('leaders/', id).get();
+        return this.restangular.one('leaders', id).get();
     }
 
     getFeaturedLeader(): Observable<Leader> {

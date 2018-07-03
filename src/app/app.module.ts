@@ -17,13 +17,6 @@ import {ProcessHTTPMsgService} from './services/process-httpmsg.service';
 import { RestangularModule, Restangular } from 'ngx-restangular';
 import {RestangularConfigFactory} from './shared/restConfig';
 
-import {
-    MatButtonModule, MatCheckboxModule, MatDatepickerModule, MatFormFieldModule,
-    MatInputModule, MatRadioModule, MatSelectModule, MatSliderModule,
-    MatSlideToggleModule, MatToolbarModule, MatListModule, MatGridListModule,
-    MatCardModule, MatIconModule, MatProgressSpinnerModule, MatDialogModule
-} from '@angular/material';
-
 import 'hammerjs';
 import {AppComponent} from './app.component';
 import {MenuComponent} from './menu/menu.component';
@@ -51,22 +44,6 @@ import {FeedbackService} from './services/feedback.service';
         HighlightDirective
     ],
     imports: [
-        MatButtonModule,
-        MatCheckboxModule,
-        MatDatepickerModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatRadioModule,
-        MatSelectModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatToolbarModule,
-        MatListModule,
-        MatGridListModule,
-        MatCardModule,
-        MatIconModule,
-        MatProgressSpinnerModule,
-        MatDialogModule,
         FlexLayoutModule,
         BrowserModule,
         BrowserAnimationsModule,
